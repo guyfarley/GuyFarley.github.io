@@ -23,7 +23,7 @@
 
 		<!-- Header -->
 		<header id="header">
-			<a href="index.html" class="logo">Take Me Home</a>
+			<a href="index.html" class="logo">Home</a>
 			<nav>
 				<a href="#menu">Menu</a>
 			</nav>
@@ -52,23 +52,41 @@
 					<header class="major">
 						<h1>Blog</h1>
 					</header>
-					<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
-					<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis
-						dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet.
-						Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia
-						malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus,
-						commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti
-						sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh
-						porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum.
-						Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in
-						aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-						turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed
-						vehicula.</p>
-					<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor
-						mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris,
-						consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit.
-						Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+					<span class="image main"><img src="images/mountains.jpg" alt="" /></span>
+					<h3>Data Fetching and State Management in React + Next.js</h3>
+					<p><i>October 22, 2022</i></p>
+					<p>I recently built an eCommerce app with the intention of learning the Next.js framework, which I had not
+						used extensively before. As I expected (and hoped for), this framework presented a few challenges that
+						forced me to creatively problem-solve. I thought I'd share my learnings here!</p>
+					<h4>Data Fetching and Next.js</h4>
+					<p>My intention for the app was to make as few API calls as possible, gathering data at the outset and then
+						manipulating as needed on the client side. Normally this would be a simple useEffect within the Home
+						component that would make the API call once (upon initial page load) and then set all data into state for
+						use
+						throughout the session.</p>
+					<p>But since components are pre-rendered in Next.js framework, this data fetch could not actually happen in
+						the browser. Instead, the data needs to be fetched at buildtime - before the page is initially loaded! And
+						this
+						happens differently than it would in a standard React application. With Next.js the data fetch is called
+						inside the getStaticProps function, which runs at buildtime. Once that happens, the data is sent back from
+						the
+						server and captured in an object that is then passed along as props to the Home page (component) for
+						rendering.</p>
+					<h4>State Management</h4>
+					<p>So how would state management work in this situation? Ideally, the data that was received from the database
+						upon initial fetch would simply be set into state. But in this case the data was being rendered before it
+						could be set into state. So I needed to figure out a way to use the stateful data whenever possible, and
+						only use the getStaticProps data if the component had never been loaded before. </p>
+					<p>It actually took a while to wrap my head around the chain of events happening inside my Next.js app, but
+						once I found the solution it was really quite simple! Using a conditional statement, I could evaluate if the
+						data existed yet in global state. If so, the page would render that data from state. If not, the page would
+						use the props data pulled from DynamoDB when getStaticProps was executed.</p>
+					<p>In the end, the workaround was well worth it for the improved speed and functionality achieved with
+						Next.js. Check
+						out the code by visiting my <a href="https://github.com/GuyFarley/lassen-fly-shop" target="_blank">GitHub
+							repo</a>. And be sure to visit the <a href="https://lassen-fly-shop.netlify.app/" target="_blank">deployed
+							site</a> as well!</p>
+					<p>-gf</p>
 				</div>
 			</section>
 
